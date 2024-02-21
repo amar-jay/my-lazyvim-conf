@@ -1,13 +1,20 @@
-require("common.keymap")
 require("common.set")
+local keymaps = require("common.keymap")
+
+
+require("ace.utils.prepend").set_global_keys(keymaps.keys)
+
+
 require("common.lazy")
 
+
 if vim.loader then
-	vim.loader.enable()
+  vim.loader.enable()
 end
 
 _G._debug = function(...)
-	require("utils.debug").dump(...)
+  require("ace.utils.debug").dump(...)
 end
 
 vim.print = _G._debug
+

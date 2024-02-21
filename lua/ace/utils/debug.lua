@@ -15,9 +15,9 @@ function M.get_loc()
   return source .. ":" .. info.linedefined
 end
 
-
 ---@param value any
 ---@param opts? {loc:string}
+---@return nil
 function M._dump(value, opts)
   opts = opts or {}
   opts.loc = opts.loc or M.get_loc()
@@ -26,6 +26,7 @@ function M._dump(value, opts)
       M._dump(value, opts)
     end)
   end
+
   opts.loc = vim.fn.fnamemodify(opts.loc, ":~:.")
   local msg = vim.inspect(value)
   vim.notify(msg, vim.log.levels.INFO, {
@@ -41,7 +42,6 @@ function M._dump(value, opts)
     end,
   })
 end
-
 
 function M.dump(...)
   local value = { ... }

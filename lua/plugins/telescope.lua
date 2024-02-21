@@ -1,3 +1,12 @@
+local status, keymap = pcall(require, "common.keymap")
+if not status then
+  error("Error loading common.keymap")
+end
+
+require("ace.utils.prepend").set_global_keys(keymap.keys)
+-- error with type completion, so reinitialize the keys, as _keys variable
+local _keys = keymap.keys
+
 return {
   "telescope.nvim",
   dependencies = {
@@ -6,10 +15,11 @@ return {
       build = "make",
     },
     "nvim-telescope/telescope-file-browser.nvim",
+---    "common.keymap"
   },
   keys = {
     {
-      "<leader>fP",
+      _keys.telescope.find_files,
       function()
         require("telescope.builtin").find_files({
           cwd = require("lazy.core.config").options.root,
@@ -18,7 +28,7 @@ return {
       desc = "Find Plugin File",
     },
     {
-      ";f",
+      _keys.telescope.fuzzy_find,
       function()
         local builtin = require("telescope.builtin")
         builtin.find_files({
@@ -28,59 +38,36 @@ return {
       end,
       desc = "Lists files in your current working directory, respects .gitignore",
     },
+
     {
-      ";r",
-      function()
-        local builtin = require("telescope.builtin")
-        builtin.live_grep({
-          additional_args = { "--hidden" },
-        })
-      end,
-      desc =
-      "Search for a string in your current working directory and get results live as you type, respects .gitignore",
-    },
-    {
-      "\\\\",
+      _keys.telescope.buffers,
       function()
         local builtin = require("telescope.builtin")
         builtin.buffers()
       end,
       desc = "Lists open buffers",
     },
+
     {
-      ";t",
-      function()
-        local builtin = require("telescope.builtin")
-        builtin.help_tags()
-      end,
-      desc = "Lists available help tags and opens a new window with the relevant help info on <cr>",
-    },
-    {
-      ";;",
+      _keys.telescope.resume,
       function()
         local builtin = require("telescope.builtin")
         builtin.resume()
       end,
       desc = "Resume the previous telescope picker",
     },
+
     {
-      ";e",
+      _keys.telescope.diagnostics,
       function()
         local builtin = require("telescope.builtin")
         builtin.diagnostics()
       end,
       desc = "Lists Diagnostics for all open buffers or a specific buffer",
     },
+
     {
-      ";s",
-      function()
-        local builtin = require("telescope.builtin")
-        builtin.treesitter()
-      end,
-      desc = "Lists Function names, variables, from Treesitter",
-    },
-    {
-      "sf",
+      _keys.telescope.file_browser,
       function()
         local telescope = require("telescope")
 
@@ -101,6 +88,34 @@ return {
       end,
       desc = "Open File Browser with the path of the current buffer",
     },
+
+    {
+      _keys.telescope.live_grep,
+      function()
+        local builtin = require("telescope.builtin")
+        builtin.live_grep({
+          additional_args = { "--hidden" },
+        })
+      end,
+      desc =
+      "Search for a string in your current working directory and get results live as you type, respects .gitignore",
+    },
+    {
+      _keys.telescope.treesitter,
+      function()
+        local builtin = require("telescope.builtin")
+        builtin.treesitter()
+      end,
+      desc = "Lists Function names, variables, from Treesitter",
+    },
+    {
+      _keys.telescope.help_tag,
+      function()
+        local builtin = require("telescope.builtin")
+        builtin.help_tags()
+      end,
+      desc = "Lists available help tags and opens a new window with the relevant help info on <cr>",
+    },
   },
   config = function(_, opts)
     local telescope = require("telescope")
@@ -108,13 +123,17 @@ return {
     local fb_actions = require("telescope").extensions.file_browser.actions
 
     opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
+      --[[
       wrap_results = true,
       layout_strategy = "horizontal",
       layout_config = { prompt_position = "top" },
       sorting_strategy = "ascending",
       winblend = 0,
+      --]]
       mappings = {
-        n = {},
+        n = {
+          ["q"] = actions.close
+        },
       },
     })
     opts.pickers = {
@@ -132,10 +151,22 @@ return {
         -- disables netrw and use telescope-file-browser in its place
         hijack_netrw = true,
         mappings = {
+          ["i"] = {
+            ["<C-w>"] = function() vim.cmd('normal vbd') end,
+          },
+
           -- your custom insert mode mappings
           ["n"] = {
             -- your custom normal mode mappings
-            ["N"] = fb_actions.create,
+            [_keys.telescope.browser_create] = fb_actions.create,
+            [_keys.telescope.browser_gotoparent] = fb_actions.goto_parent_dir,
+            [_keys.telescope.browser_shell] = function()
+              vim.cmd('startinsert')
+            end
+
+            -- your custom normal mode mappings
+            --[[
+            ["c"] = fb_actions.create,
             ["h"] = fb_actions.goto_parent_dir,
             ["/"] = function()
               vim.cmd("startinsert")
@@ -152,6 +183,7 @@ return {
             end,
             ["<PageUp>"] = actions.preview_scrolling_up,
             ["<PageDown>"] = actions.preview_scrolling_down,
+            --]]
           },
         },
       },

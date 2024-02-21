@@ -11,26 +11,27 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 require("lazy").setup({
   spec = {
-    { "ellisonleao/gruvbox.nvim" },
     -- add LazyVim and import its plugins
     {
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
         colorscheme = "gruvbox",
-        -- colorscheme = "solarized-osaka",
         news = {
           lazyvim = true,
           neovim = true,
         },
       },
     },
+    { "ellisonleao/gruvbox.nvim" },
     -- import any extras modules here
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
+    { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.json" },
     -- { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "lazyvim.plugins.extras.lang.rust" },

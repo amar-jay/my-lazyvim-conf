@@ -6,6 +6,7 @@ local hexChars = "0123456789abcdef"
 
 local function hex_to_rgb(hex)
 	hex = string.lower(hex)
+  ---@type integer[]
 	local ret = {}
 	for i = 0, 2 do
 		local char1 = string.sub(hex, i * 2 + 2, i * 2 + 2)
@@ -19,27 +20,27 @@ end
 
 
 --[[
- * Converts an RGB color value to HSL. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes r, g, and b are contained in the set [0, 255] and
- * returns h, s, and l in the set [0, 1].
- *
- * @param   Number  r       The red color value
- * @param   Number  g       The green color value
- * @param   Number  b       The blue color value
- * @return  Array           The HSL representation
+  Converts an RGB color value to HSL. Conversion formula
+  adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+  Assumes r, g, and b are contained in the set [0, 255] and
+  returns h, s, and l in the set [0, 1].
 ]]
+---@param r number                          The red color value
+---@param g number                          The green color value
+---@param b number                          The blue color value
+---@return  number, number, number          The HSL representation
 local function rgbToHsl(r, g, b)
+  ---@type number, number
 	local max, min = math.max(r, g, b), math.min(r, g, b)
-	local h = 0
-	local s = 0
-	local l = 0
+  ---@type number, number, number
+	local h, s, l
 
 	l = (max + min) / 2
 
 	if max == min then
 		h, s = 0, 0 -- achromatic
 	else
+    ---@type integer
 		local d = max - min
 		if l > 0.5 then
 			s = d / (2 - max - min)
@@ -64,22 +65,26 @@ end
 
 
 --[[
- * Converts an HSL color value to RGB. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes h, s, and l are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 255].
- *
- * @param   Number  h       The hue
- * @param   Number  s       The saturation
- * @param   Number  l       The lightness
- * @return  Array           The RGB representation
+  Converts an HSL color value to RGB. Conversion formula
+  adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+  Assumes h, s, and l are contained in the set [0, 1] and
+  returns r, g, and b in the set [0, 255].
 ]]
+---@param h number The hue
+---@param s number The saturation
+---@param l number The lightness
+---@return number, number, number The RGB representation
 function M.hslToRgb(h, s, l)
-	local r, g, b
+  ---@type number, number, number
+	local r, g, b = 0, 0, 0
 
 	if s == 0 then
 		r, g, b = l, l, l -- achromatic
 	else
+    ---@param p number, 
+    ---@param q number 
+    ---@param t number
+    ---@return number
 		local function hue2rgb(p, q, t)
 			if t < 0 then
 				t = t + 1
@@ -99,7 +104,8 @@ function M.hslToRgb(h, s, l)
 			return p
 		end
 
-		local q
+    ---@type number
+		local q = 0
 		if l < 0.5 then
 			q = l * (1 + s)
 		else

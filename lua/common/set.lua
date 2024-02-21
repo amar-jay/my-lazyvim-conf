@@ -51,6 +51,7 @@ vim.opt.updatetime = 250
 
 --vim.opt.colorcolumn = "800"
 vim.g.mapleader = " " -- Set Leader
+vim.g.maplocalleader = ' '
 
 
 -- Undercurl

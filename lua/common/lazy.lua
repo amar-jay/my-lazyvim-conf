@@ -19,14 +19,14 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        colorscheme = "gruvbox",
+        colorscheme = "onedark",
         news = {
           lazyvim = true,
           neovim = true,
         },
       },
     },
-    { "ellisonleao/gruvbox.nvim" },
+    --    { "ellisonleao/gruvbox.nvim" },
     -- import any extras modules here
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },

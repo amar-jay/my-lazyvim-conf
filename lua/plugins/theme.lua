@@ -2,6 +2,9 @@
 
 return {
   {
+    'navarasu/onedark.nvim' -- Theme inspired by Atom
+  },
+  --[[{
     "craftzdog/solarized-osaka.nvim",
     opts = {
       lazy = true,
@@ -9,4 +12,5 @@ return {
       transparent = true,
     }
   },
+  ]]
 }

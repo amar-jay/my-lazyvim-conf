@@ -19,7 +19,7 @@ return {
   },
   keys = {
     {
-      _keys.telescope.find_files,
+      _keys.telescope.find_all_files,
       function()
         require("telescope.builtin").find_files({
           cwd = require("lazy.core.config").options.root,
@@ -28,7 +28,7 @@ return {
       desc = "Find Plugin File",
     },
     {
-      _keys.telescope.fuzzy_find,
+      _keys.telescope.find_files,
       function()
         local builtin = require("telescope.builtin")
         builtin.find_files({

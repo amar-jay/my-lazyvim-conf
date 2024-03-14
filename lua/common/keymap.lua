@@ -8,6 +8,7 @@ M.keys.telescope = {
   file_browser = "<leader>b",      -- has previewer
   file_browser_less = "<leader>B", -- no previewer
   find_files = "<leader>ff",       -- this finds plugin files using find_files
+  find_all_files = "<leader>ff",       -- this finds plugin files using find_files
   fuzzy_find = "///",              -- what is the dffce b/n find_files and fuzzy_find?
   old_files = "<leader>?",
   resume = "<leader>r",

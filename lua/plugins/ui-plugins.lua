@@ -74,7 +74,7 @@ return {
     opts = function()
       return {
         options = {
-          theme = 'auto',
+          theme = 'onedark',
           component_separators = '|',
           section_separators = '',
           icons_enabled = false,

@@ -43,7 +43,7 @@ local clang_config = {
 local servers = {
   gopls = {},
   pyright = {},
-  ["rust-analyzer"] = {},
+  rust_analyzer = {},
   tsserver = {
     root_dir = function(...)
       return require("lspconfig.util").root_pattern(".git")(...)
@@ -75,10 +75,7 @@ local servers = {
     },
   },
   clangd = clang_config,
-  shfmt = {},
-  shellcheck = {},
-  codelldb = {},
-  lua_check = {
+  lua_ls = {
     -- enabled = false,
     single_file_support = true,
     settings = {

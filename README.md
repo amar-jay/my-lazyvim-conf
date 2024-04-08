@@ -2,4 +2,7 @@
 
 This is built with __Neovim, LazyVim, Mason__, and other awesome plugins.
 
-![screenshot](./ace-screenshot.png)
+![screenshot](./ace-screenshot-nvim.png)
+
+### with TMUX
+![with tmux screenshot](./ace-screenshot.png)

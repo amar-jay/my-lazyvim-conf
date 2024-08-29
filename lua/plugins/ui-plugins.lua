@@ -1,7 +1,6 @@
 -- contains all external ui plugins
 -- including notify, zenmode, bufferline, and others
 local logo = [[
-
 |   | ||||| |||| |||| |||| |    ||||   |  |   |
 |   | |   | |    |    |    |    |   |  |  |\  |
 ||||| |   | |||| |||| |||| |    |   |  |  | \ |
@@ -99,7 +98,7 @@ return {
     event = "VimEnter",
     opts = {
       config = {
-        header = vim.split(string.rep("\n", 8) .. logo .. "\n\n", "\n")
+        header = vim.split(string.rep("\n", 3) .. logo .. string.rep("\n", 3), "\n")
       }
     }
     --    len: 42

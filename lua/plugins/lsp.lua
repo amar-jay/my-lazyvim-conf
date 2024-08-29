@@ -179,6 +179,7 @@ return {
         "tailwindcss-language-server",
         "typescript-language-server",
         "lua-language-server",
+        "astro-language-server",
       })
     end,
   },

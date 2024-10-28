@@ -1,6 +1,14 @@
 --[[
 Lua LSP configuation, and git config to LSP
 --]]
+local verible_config = {
+        -- cmd = { 'verible-verilog-ls', '--rules_config_search' },
+        cmd = { 'verible-verilog-ls' },
+        root_dir = require('lspconfig.util').root_pattern('.git', 'verilator.f'),
+        -- capabilities = capabilities,
+        format_on_save = true,
+}
+
 local clang_config = {
   keys = {
     { "gs", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
@@ -75,6 +83,7 @@ local servers = {
     },
   },
   clangd = clang_config,
+  verible = verible_config,
   lua_ls = {
     -- enabled = false,
     single_file_support = true,

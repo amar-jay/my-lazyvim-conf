@@ -39,8 +39,9 @@ vim.opt.splitright = true -- Put new windows right of current
 --vim.opt.transparent = 0.7 -- NOT WORKING
 
 -- Case insensitive searching UNLESS /C or capital in search
-vim.opt.ignorecase = true -- case insensitive unless /C
-vim.opt.smartcase = true
+-- TODO: change both back to true
+vim.opt.ignorecase = false -- case insensitive unless /C
+vim.opt.smartcase = false
 
 --vim.opt.isfname:append("@-@")
 

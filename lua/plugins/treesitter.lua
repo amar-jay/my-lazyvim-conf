@@ -14,12 +14,15 @@ return {
         "gitignore",
         "go",
         "graphql",
+        --"hdl-checker",
+        --"verible",
         "http",
         "lua",
         "rust",
         "scss",
         "sql",
         "svelte",
+        "verilog",
       },
 
       matchup = {

@@ -2,12 +2,78 @@
 Lua LSP configuation, and git config to LSP
 --]]
 local verible_config = {
-        -- cmd = { 'verible-verilog-ls', '--rules_config_search' },
-        cmd = { 'verible-verilog-ls' },
-        root_dir = require('lspconfig.util').root_pattern('.git', 'verilator.f'),
-        -- capabilities = capabilities,
-        format_on_save = true,
+  cmd = { 'verible-verilog-ls', '--rules_config_search' },
+  --cmd = { 'verible-verilog-ls' },
+  root_dir = require('lspconfig.util').root_pattern('.git', 'verilator.f'),
+  -- filetypes = { "verilog", "systemverilog" },
+  -- capabilities = capabilities,
+  --.find_git_ancestor(fname)
+  format_on_save = true,
 }
+--[[--
+veridian.setup {
+    cmd = { 'veridian' },
+    root_dir = function(fname)
+        -- Resolve the absolute path of the file
+        local abs_fname = lspconfutil.path.is_absolute(fname) and fname
+            or lspconfutil.path.join(vim.loop.cwd(), fname)
+
+        -- Determine the root directory based on known patterns
+        return lspconfutil.root_pattern("veridian.yml", ".git")(abs_fname)
+            or lspconfutil.path.dirname(abs_fname)
+    end,
+}
+--]]
+
+local veridian_config = {
+  cmd = { 'veridian' },
+  --capabilities = require("cmp_nvim_lsp").default_capabilities(),
+--  filetypes = { "verilog", "systemverilog" },   -- Adjust as necessary
+  root_dir = function(fname)
+    -- Resolve the absolute path of the file
+    local lspconfutil = require("lspconfig.util")
+    local is_absolute = fname:sub(1, 1) == "/"
+    local abs_fname = is_absolute and fname
+        or lspconfutil.path.join(vim.loop.cwd(), fname)
+
+    -- Determine the root directory based on known patterns
+    return lspconfutil.root_pattern("veridian.yml", ".git", "verilator.f")(abs_fname)
+        or lspconfutil.path.dirname(abs_fname)
+  end,
+}
+local scala_config = {
+
+      keys = {
+        {
+          "<leader>me",
+          function()
+            require("telescope").extensions.metals.commands()
+          end,
+          desc = "Metals commands",
+        },
+        {
+          "<leader>mc",
+          function()
+            require("metals").compile_cascade()
+          end,
+          desc = "Metals compile cascade",
+        },
+        {
+          "<leader>mh",
+          function()
+            require("metals").hover_worksheet()
+          end,
+          desc = "Metals hover worksheet",
+        },
+      },
+      init_options = {
+        statusBarProvider = "off",
+      },
+      settings = {
+        showImplicitArguments = true,
+        excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+      },
+    }
 
 local clang_config = {
   keys = {
@@ -49,6 +115,8 @@ local clang_config = {
 
 ---@type lspconfig.options
 local servers = {
+ veridian = veridian_config,
+ verible = verible_config,
   gopls = {},
   pyright = {},
   rust_analyzer = {},
@@ -83,7 +151,7 @@ local servers = {
     },
   },
   clangd = clang_config,
-  verible = verible_config,
+  metals = scala_config,
   lua_ls = {
     -- enabled = false,
     single_file_support = true,
@@ -200,9 +268,7 @@ return {
         inline = false,
       },
     }
-
   },
-
   -- lsp servers
   {
     "neovim/nvim-lspconfig",
@@ -215,6 +281,23 @@ return {
           require("clangd_extensions").setup(vim.tbl_deep_extend("force", clangd_ext_opts or {}, { server = opts }))
           return false
         end,
+
+      metals = function(_, opts)
+        local metals = require("metals")
+        local metals_config = vim.tbl_deep_extend("force", metals.bare_config(), opts)
+        metals_config.on_attach = LazyVim.has("nvim-dap") and metals.setup_dap or nil
+
+        local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = { "scala", "sbt" },
+          callback = function()
+            metals.initialize_or_attach(metals_config)
+          end,
+          group = nvim_metals_group,
+        })
+        return true
+      end,
+
       },
     },
 

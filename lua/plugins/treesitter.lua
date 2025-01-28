@@ -14,14 +14,13 @@ return {
         "gitignore",
         "go",
         "graphql",
-        --"hdl-checker",
-        --"verible",
         "http",
         "lua",
         "rust",
         "scss",
         "sql",
         "svelte",
+         "scala",
         "verilog",
       },
 
@@ -38,7 +37,9 @@ return {
 
       playground = {
         enable = true,
-        disable = {},
+        disable = {
+          "verilog"
+        },
         updatetime = 25,        -- Debounced time for highlighting nodes in the playground from source code
         persist_queries = true, -- Whether the query persists across vim sessions
         keybindings = {

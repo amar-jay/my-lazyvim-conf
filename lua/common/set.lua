@@ -16,7 +16,7 @@ vim.opt.backup = false -- No backup of files
 vim.opt.cmdheight = 1  -- Give more space for displaying messages.
 vim.opt.laststatus = 2
 vim.opt.scrolloff = 10
-vim.opt.shell = "zsh"
+vim.opt.shell = vim.fn.executable("zsh") == 1 and "zsh" or "/bin/bash"
 vim.opt.breakindent = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 2

@@ -120,7 +120,7 @@ local servers = {
   gopls = {},
   pyright = {},
   rust_analyzer = {},
-  tsserver = {
+  ts_ls = {
     root_dir = function(...)
       return require("lspconfig.util").root_pattern(".git")(...)
     end,
@@ -240,7 +240,7 @@ local servers = {
 return {
   -- tools
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "css-lsp",
@@ -258,6 +258,7 @@ return {
         "lua-language-server",
         "astro-language-server",
       })
+      opts.ensure_installed = vim.fn.uniq(vim.fn.sort(opts.ensure_installed))
     end,
   },
   {

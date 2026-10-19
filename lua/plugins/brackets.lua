@@ -1,6 +1,6 @@
 -- jump with `[` / `]`
 return {
-  "echasnovski/mini.bracketed",
+  "nvim-mini/mini.bracketed",
   event = "BufReadPost",
   config = function()
     local bracketed = require("mini.bracketed")

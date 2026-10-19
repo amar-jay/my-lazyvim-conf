@@ -2,14 +2,14 @@
 -- HSL colors config
 --]]
 return {
-  "echasnovski/mini.hipatterns",
+  "nvim-mini/mini.hipatterns",
   event = "BufReadPre",
   opts = {
     highlighters = {
       hsl_color = {
         pattern = "hsl%(%d+,? %d+%%?,? %d+%%?%)",
         group = function(_, match)
-          local utils = require("solarized-osaka.hsl")
+          local utils = require("common.hsl-hex")
           --- @type string, string, string
           local nh, ns, nl = match:match("hsl%((%d+),? (%d+)%%?,? (%d+)%%?%)")
           --- @type number?, number?, number?

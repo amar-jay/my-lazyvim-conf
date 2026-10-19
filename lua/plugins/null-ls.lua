@@ -1,6 +1,6 @@
 --[[--
 return {
-  "jose-elias-alvarez/null-ls.nvim",
+  "nvimtools/none-ls.nvim",
   config = function()
     local null_ls = require("null-ls")
     -- Function to read the verilator.f file
@@ -54,7 +54,7 @@ return {
 --]]
 
 return {
-  "jose-elias-alvarez/null-ls.nvim",
+  "nvimtools/none-ls.nvim",
 }
 --[[--
 --]]

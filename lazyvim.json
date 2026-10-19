@@ -6,9 +6,10 @@
     "lazyvim.plugins.extras.lang.scala",
     "lazyvim.plugins.extras.util.gitui"
   ],
+  "install_version": 7,
   "news": {
-    "NEWS.md": "10960",
-    "doc/news.txt": "24450"
+    "NEWS.md": "11866",
+    "doc/news.txt": "25653"
   },
-  "version": 7
+  "version": 8
 }

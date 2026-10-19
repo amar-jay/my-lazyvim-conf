@@ -146,7 +146,7 @@ M.nnoremap(M.keys._vim.hex_to_hsl, function()
   -- Find hex code patterns and replace them
   for hex in line_content:gmatch("#[0-9a-fA-F]+") do
     ---@type number
-    local hsl = require("lua.common.hsl-hex").hexToHSL(hex)
+    local hsl = require("common.hsl-hex").hexToHSL(hex)
     line_content = line_content:gsub(hex, hsl)
   end
 

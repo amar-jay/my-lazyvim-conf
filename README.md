@@ -27,3 +27,16 @@ completion is retained; Sidekick next-edit suggestions are disabled.
 Restart Neovim after updating the configuration. Use `:checkhealth sidekick`
 for CLI and multiplexer diagnostics. Context mappings prepare agent input;
 review and submit it in the agent terminal.
+
+## Copilot autocomplete
+
+Copilot uses its language server through `copilot.lua` on Neovim 0.11+.
+Run `:Copilot auth` once if not already signed in, then `:Copilot status`.
+Inline ghost-text suggestions appear automatically while typing:
+
+- `Alt-l`: accept the suggestion.
+- `Alt-]` / `Alt-[`: next / previous suggestion.
+- `Ctrl-]`: dismiss the suggestion.
+
+Ordinary LSP completion remains available through Blink. `Space aa` still opens
+Codex through Sidekick; `Space ac` opens Copilot Chat.
